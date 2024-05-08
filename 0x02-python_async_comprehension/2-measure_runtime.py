@@ -3,10 +3,10 @@
 '''
 import asyncio
 import time
-from importlib import import_module as using
+from importlib import import_module
 
 
-async_comprehension = using('1-async_comprehension').async_comprehension
+async_comprehension = import_module('1-async_comprehension').async_comprehension
 
 
 async def measure_runtime() -> float:
@@ -15,4 +15,4 @@ async def measure_runtime() -> float:
     '''
     start_time = time.time()
     await asyncio.gather(*(async_comprehension() for _ in range(4)))
-    return time.time() - 
+    return time.time() - start_time
