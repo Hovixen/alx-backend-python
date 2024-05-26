@@ -3,7 +3,7 @@
 import unittest
 from parameterized import parameterized
 from utils import access_nested_map
-from typing import Union, Dict, Tuple
+from typing import Union, Dict, Tuple, Any
 
 
 class TestAccessNestedMap(unittest.TestCase):
