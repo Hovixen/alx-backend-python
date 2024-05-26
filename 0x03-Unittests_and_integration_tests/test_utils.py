@@ -2,6 +2,7 @@
 """ Parameterized unittest 1 module """
 import unittest
 from parameterized import parameterized
+from unittest.mock import patch, Mock
 from typing import Union, Dict, Tuple, Any
 from utils import access_nested_map, get_json, memoize
 
