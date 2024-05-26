@@ -5,6 +5,7 @@ from parameterized import parameterized
 from typing import Union, Dict, Tuple, Any
 from utils import access_nested_map, get_json, memoize
 
+
 class TestAccessNestedMap(unittest.TestCase):
     """ class to test access_nested_map function """
     @parameterized.expand([
