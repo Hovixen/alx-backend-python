@@ -19,7 +19,7 @@ class TestGithubOrg(unittest.TestCase):
                  response: Dict, mock_get_json: MagicMock) -> None:
         """ test test_org for the right output """
 
-        mock_get_json.return_value = MagicMock(return_value = response)
+        mock_get_json.return_value = MagicMock(return_value=response)
 
         client = GithubOrgClient(org_name)
         result = client.org()
