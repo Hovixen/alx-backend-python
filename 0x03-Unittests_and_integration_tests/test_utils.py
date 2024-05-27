@@ -41,7 +41,7 @@ class TestGetJson(unittest.TestCase):
         ])
     @patch('utils.requests.get')
     def test_get_json(self, test_url: str,
-            test_payload: Dict, mock_get) -> None:
+                      test_payload: Dict, mock_get) -> None:
         """ test the get_json function using mock """
         mock_response = Mock()
         mock_response.json.return_value = test_payload
@@ -52,3 +52,30 @@ class TestGetJson(unittest.TestCase):
         mock_get.assert_called_once_with(test_url)
 
         mock_get.reset_mock()
+
+
+class TestMemoize(unittest.TestCase):
+    """ class to test memoize function """
+    def test_memoize(self):
+        """ function to test the memoize decorator """
+        class TestClass:
+            """ test class """
+            def a_method(self):
+                """test method """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ test method """
+                return self.a_method()
+
+        a_obj = TestClass()
+
+        with patch.object(TestClass, 'a_method',
+                          return_value=42) as mock_a_method:
+
+            test1 = a_obj.a_property
+            test2 = a_obj.a_property
+            self.assertEqual(test1, 42)
+            self.assertEqual(test2, 42)
+            mock_a_method.assert_called_once()
