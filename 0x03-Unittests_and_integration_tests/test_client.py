@@ -2,7 +2,7 @@
 """ test_client test case """
 import unittest
 from typing import Dict
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, Mock, patch
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -14,15 +14,15 @@ class TestGithubOrg(unittest.TestCase):
         ("google", {"login": "google"}),
         ("abc", {"login": "abc"})
         ])
-    @patch('client.get_json', new_callable=MagicMock)
+    @patch('client.get_json')
     def test_org(self, org_name: str,
-                 response: Dict, mock_get_json) -> None:
+                 response: Dict, mock_get_json: MagicMock) -> None:
         """ test test_org for the right output """
 
-        mock_get_json.return_value = response
+        mock_get_json.return_value = MagicMock(return_value = response)
 
         client = GithubOrgClient(org_name)
-        result = client.org
+        result = client.org()
 
         self.assertEqual(result, response)
         mock_get_json.assert_called_once_with(
