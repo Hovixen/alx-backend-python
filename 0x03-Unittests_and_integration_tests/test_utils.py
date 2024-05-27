@@ -19,18 +19,39 @@ class TestAccessNestedMap(unittest.TestCase):
             path: Tuple[str], expected: Union[Dict, int]) -> None:
         """ test assertEqual function """
         self.assertEqual(access_nested_map(nested_map, path), expected)
-     
+
     @parameterized.expand([
         ({}, ("a",), "'a'"),
         ({"a": {}}, ("a", "b"), "'b'")
         ])
     def test_access_nested_map_exception(
-        self, nested_map: Dict,
-        path: Tuple[str], expected: str
-        ) -> None:
+            self, nested_map: Dict,
+            path: Tuple[str], expected: str) -> None:
         """ test that KeyError is raised with expected message """
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
         self.assertEqual(str(context.exception), expected)
 
 
+class TestGetJson(unittest.TestCase):
+    """ class to test get_json function """
+    @patch('utils.requests.get')
+    def test_get_json(self, mock_get) -> None:
+        """ test the get_json function using mock """
+        tests = [{"test_url": "http://example.com",
+                  "test_payload": {"payload": True}},
+                 {"test_url": "http://holberton.io",
+                  "test_payload": {"payload": False}}]
+        for test in tests:
+            test_url = test['test_url']
+            test_payload = test['test_payload']
+
+            mock_response = Mock()
+            mock_response.json.return_value = test_payload
+            mock_get.return_value = mock_response
+
+            result = get_json(test_url)
+            self.assertEqual(result, test_payload)
+            mock_get.assert_called_once_with(test_url)
+
+            mock_get.reset_mock()
