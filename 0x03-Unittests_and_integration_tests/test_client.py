@@ -7,14 +7,14 @@ from parameterized import parameterized
 from client import GithubOrgClient
 
 
-class TestGithubOrg(unittest.TestCase):
+class TestGithubOrgClient(unittest.TestCase):
     """ class to test githuborgclient.org """
 
     @parameterized.expand([
         ("google", {"login": "google"}),
         ("abc", {"login": "abc"})
         ])
-    @patch('client.get_json')
+    @patch('client.get_json',i)
     def test_org(self, org_name: str,
                  response: Dict, mock_get_json) -> None:
         """ test test_org for the right output """
