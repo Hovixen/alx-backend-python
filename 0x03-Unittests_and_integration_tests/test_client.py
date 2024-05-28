@@ -14,7 +14,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google", {"login": "google"}),
         ("abc", {"login": "abc"})
         ])
-    @patch('client.get_json',i)
+    @patch('client.get_json')
     def test_org(self, org_name: str,
                  response: Dict, mock_get_json) -> None:
         """ test test_org for the right output """
@@ -22,7 +22,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.return_value = response
 
         client = GithubOrgClient(org_name)
-        result = client.org
+        result = client.org()
 
         self.assertEqual(result, response)
         mock_get_json.assert_called_once_with(
